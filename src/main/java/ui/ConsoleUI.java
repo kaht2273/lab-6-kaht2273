@@ -5,12 +5,14 @@ import app.questions.Question;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class ConsoleUI {
+public class ConsoleUI
+{
 
     private Scanner in;
     private PrintStream outStream;
 
-    public ConsoleUI(Scanner in, PrintStream out) {
+    public ConsoleUI(Scanner in, PrintStream out)
+    {
         this.in = in;
         this.outStream = out;
     }
@@ -23,22 +25,28 @@ public class ConsoleUI {
      * @param question The question to ask
      * @return The number of tries the user takes to provide the correct answer
      */
-    public int askQuestion(Question question) {
+    public int askQuestion(Question question)
+    {
         int tries = 0;
 
-        while ( true ) {
+        while ( true )
+        {
             String answer = promptForString(question.getPrompt());
 
             String result = question.parseAnswer(answer);
-            if ( result.equals(Question.ANSWER_INVALID) ) {
+            if ( result.equals(Question.ANSWER_INVALID) )
+            {
                 println("Invalid answer. " + question.getValidityMessage());
-            } else {
+            } else
+            {
                 tries++;
 
-                if ( result.equals(Question.ANSWER_CORRECT) ) {
+                if ( result.equals(Question.ANSWER_CORRECT) )
+                {
                     println("Correct!");
                     return tries;
-                } else {
+                } else
+                {
                     println("Incorrect. Try again.");
                 }
             }
@@ -51,11 +59,13 @@ public class ConsoleUI {
      * @return The nth number in the returned array is the number of tries it took for the user to give the
      *      correct answer for the nth question.
      */
-    public int[] askQuestions(Question[] questions) {
+    public int[] askQuestions(Question[] questions)
+    {
         int[] results = new int[questions.length];
 
         int i = 0;
-        for ( Question q : questions ) {
+        for ( Question q : questions )
+        {
             println("Question #" + (i+1));
             results[i] = askQuestion(q);
             i++;
@@ -69,18 +79,23 @@ public class ConsoleUI {
      * @param prompt The prompt to present to the user
      * @return True if the user response 'y', false if they respond 'n'
      */
-    public boolean confirm(String prompt) {
+    public boolean confirm(String prompt)
+    {
 
-        while ( true ) {
+        while ( true )
+        {
             outStream.print(prompt + "(y/n) ");
 
             String response = in.nextLine().trim().toLowerCase();
 
-            if ( response.equals("y") ) {
+            if ( response.equals("y") )
+            {
                 return true;
-            } else if ( response.equals("n") ) {
+            } else if ( response.equals("n") )
+            {
                 return false;
-            } else {
+            } else
+            {
                 outStream.println("Invalid input");
             }
         }
@@ -90,7 +105,8 @@ public class ConsoleUI {
      * Print the given line to the console
      * @param line The line to print
      */
-    public void println(String line) {
+    public void println(String line)
+    {
         outStream.println(line);
     }
 
@@ -106,12 +122,16 @@ public class ConsoleUI {
      *
      * @param results The results to print.
      */
-    public void printResults(int[] results) {
-        for ( int i = 0 ; i < results.length ; i++ ) {
+    public void printResults(int[] results)
+    {
+        for ( int i = 0 ; i < results.length ; i++ )
+        {
             String result = (i+1) + ") ";
-            if ( results[i] == 1 ) {
+            if ( results[i] == 1 )
+            {
                 result += "✓";
-            } else {
+            } else
+            {
                 result += results[i] + " tries";
             }
             println(result);
@@ -122,7 +142,8 @@ public class ConsoleUI {
      * Prompt the user for their name
      * @return The name the user entered
      */
-    public String promptForName() {
+    public String promptForName()
+    {
         return promptForString("What is your name? ");
     }
 
@@ -131,7 +152,8 @@ public class ConsoleUI {
      * @param prompt A prompt message to display before requesting user input
      * @return The text entered by the user in response to the prompt
      */
-    public String promptForString(String prompt) {
+    public String promptForString(String prompt)
+    {
         outStream.print(prompt);
         return in.nextLine();
     }
